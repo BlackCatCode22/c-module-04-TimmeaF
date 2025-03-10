@@ -1,0 +1,28 @@
+Species Count:
+Bear: 4 animals
+Hyena: 3 animals
+Lion: 2 animals
+
+
+Animal Details:
+
+Species: Bear
+------------
+Name: Yogi, Age: 7 years old, Color: brown, Weight: 320 pounds, Birth Season: spring, Origin: Alaska Zoo, Alaska
+Name: Snuggles, Age: 25 years old, Color: black, Weight: 425 pounds, Birth Season: spring, Origin: Woodland park Zoo, Washington 
+Name: Paddington, Age: 4 years old, Color: black, Weight: 355 pounds, Birth Season: fall, Origin: Woodland park Zoo, Washington 
+Name: Smokey, Age: 4 years old, Color: brown, Weight: 405 pounds, Birth Season: spring, Origin: Alaska Zoo, Alaska
+
+
+Species: Hyena
+------------
+Name: Shenzi, Age: 4 years old, Color: tan, Weight: 70 pounds, Birth Season: spring, Origin: Friguia Park, Tunisia
+Name: Banzai, Age: 12 years old, Color: brown, Weight: 150 pounds, Birth Season: fall, Origin: Friguia Park, Tunisia
+Name: Ed, Age: 4 years old, Color: black, Weight: 120 pounds, Birth Season: spring, Origin: Friguia Park, Tunisia
+
+
+Species: Lion
+------------
+Name: Scar, Age: 6 years old, Color: tan, Weight: 300 pounds, Birth Season: spring, Origin: Zanzibar, Tanzania
+Name: Kimba, Age: 22 years old, Color: golden, Weight: 450 pounds, Birth Season: fall, Origin: Zanzibar, Tanzania
+
