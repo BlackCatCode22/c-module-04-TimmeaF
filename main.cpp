@@ -5,6 +5,7 @@
 #include <string>
 #include <filesystem>
 #include "animal.cpp"  // Include the animal class definitions
+#include <regex>  // For better pattern matching
 
 using namespace std;
 
@@ -20,64 +21,51 @@ void readAnimalsFromFile(const string& filename, vector<Animal*>& animals) {
 
     string line;
     while (getline(inFile, line)) {
+        cout << "Reading line: " << line << endl;
+
         string name, species, birthSeason, color, gender, origin;
         int age;
         double weight;
 
-        cout << "Reading line: " << line << endl;  // Debug line
+        // Use regex to extract the necessary information
+        regex rgx("([A-Za-z]+), (\\d+) year old (\\w+) (\\w+), born in (\\w+), (\\w+) color, (\\d+) pounds, from (.+)");
+        smatch matches;
 
-        // First, split the line using commas (',') and handle each part
-        stringstream ss(line);
-        string temp;
+        if (regex_search(line, matches, rgx)) {
+            name = matches[1];  // Extract the name
+            age = stoi(matches[2]);  // Extract the age
+            gender = matches[3];  // Extract the gender
+            species = matches[4];  // Extract the species
+            birthSeason = matches[5];  // Extract birth season
+            color = matches[6];  // Extract color
+            weight = stod(matches[7]);  // Extract weight
+            origin = matches[8];  // Extract origin
 
-        // Split the string into parts by commas and extract necessary information
-        getline(ss, temp, ',');  // "4 year old female hyena"
+            // Debugging: Print parsed data
+            cout << "Parsed data - Name: " << name << ", Species: " << species << ", Age: " << age
+                 << ", Birth Season: " << birthSeason << ", Color: " << color << ", Weight: " << weight
+                 << ", Origin: " << origin << endl;
 
-        // Extract name, species, and gender info from the first part
-        stringstream partStream(temp);
-        partStream >> age >> temp >> temp >> gender >> species;  // Expects "4 year old female hyena"
+            // Create animal object based on species
+            if (species == "hyena") {
+                animals.push_back(new Hyena(name, age, birthSeason, color, gender, weight, origin));
+            } else if (species == "lion") {
+                animals.push_back(new Lion(name, age, birthSeason, color, gender, weight, origin));
+            } else if (species == "tiger") {
+                animals.push_back(new Tiger(name, age, birthSeason, color, gender, weight, origin));
+            } else if (species == "bear") {
+                animals.push_back(new Bear(name, age, birthSeason, color, gender, weight, origin));
+            } else {
+                cout << "Unknown species: " << species << endl;
+            }
 
-        // Extract birth season (after the first comma)
-        getline(ss, birthSeason, ',');  // "born in spring"
-        birthSeason = birthSeason.substr(10);  // Remove "born in " part
-
-        // Extract color and weight (after the next comma)
-        getline(ss, color, ',');  // "tan color"
-        color = color.substr(0, color.find(" color"));  // Remove " color" part
-        ss >> weight;  // "70 pounds"
-
-        // Extract origin (after the next comma)
-        ss.ignore();  // Ignore the "from" part
-        getline(ss, origin);  // "Friguia Park, Tunisia"
-
-        // Debugging: Print parsed data
-        cout << "Parsed data - Name: " << name << ", Species: " << species << ", Age: " << age
-             << ", Birth Season: " << birthSeason << ", Color: " << color << ", Weight: " << weight
-             << ", Origin: " << origin << endl;
-
-        // Create animal object based on species
-        if (species == "hyena") {
-            animals.push_back(new Hyena(name, age, birthSeason, color, gender, weight, origin));
-        } else if (species == "lion") {
-            animals.push_back(new Lion(name, age, birthSeason, color, gender, weight, origin));
-        } else if (species == "tiger") {
-            animals.push_back(new Tiger(name, age, birthSeason, color, gender, weight, origin));
-        } else if (species == "bear") {
-            animals.push_back(new Bear(name, age, birthSeason, color, gender, weight, origin));
-        } else {
-            cout << "Unknown species: " << species << endl;  // Debug line for unknown species
+            // Debugging: Print number of animals added to vector
+            cout << "Animals in vector: " << animals.size() << endl;
         }
-
-        // Debugging: Print number of animals added to vector
-        cout << "Animals in vector: " << animals.size() << endl;
     }
 
     inFile.close();
 }
-
-
-
-
 
 // Function to generate a report about the animals
 void generateReport(const vector<Animal*>& animals) {
